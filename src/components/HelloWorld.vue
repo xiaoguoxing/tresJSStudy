@@ -1,38 +1,22 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import {TresCanvas} from '@tresjs/core'
+import { OrbitControls } from '@tresjs/cientos'
+function pointermove(i,p) {
+  console.log(i, p);
+}
 
-defineProps<{ msg: string }>()
-
-const count = ref(0)
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
-
-  <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
-    <p>
-      Edit
-      <code>components/HelloWorld.vue</code> to test HMR
-    </p>
-  </div>
-
-  <p>
-    Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
-  </p>
-  <p>
-    Install
-    <a href="https://github.com/vuejs/language-tools" target="_blank">Volar</a>
-    in your IDE for a better DX
-  </p>
-  <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
+  <TresCanvas ref="tresCanvasRef" window-size clear-color="#82DBC5">
+    <TresPerspectiveCamera :args="[45, 1, 0.1, 1000]"  />
+    <OrbitControls  :enableDamping="true"/>
+    <TresMesh @click="pointermove">
+      <TresTorusGeometry :args="[1, 0.5, 16, 32]" />
+      <TresMeshBasicMaterial color="orange" />
+    </TresMesh>
+    <TresAmbientLight :intensity="1" />
+  </TresCanvas>
 </template>
 
-<style scoped>
-.read-the-docs {
-  color: #888;
-}
-</style>
+<style scoped></style>
